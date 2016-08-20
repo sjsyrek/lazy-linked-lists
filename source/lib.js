@@ -8,9 +8,9 @@
  * @license ISC
  */
 
-import {List} from 'list';
+import {List} from './list';
 
-import {GT} from 'ord';
+import {GT} from './ord';
 
 const errorEmptyList = from => new Error(`*** Exception: ${from}: empty list`);
 
@@ -20,22 +20,6 @@ const errorOutOffRange = from => new Error(`*** Exception: ${from}: range error`
  * The empty list.
  */
 export const emptyList = new List();
-
-/**
- * Yield the result of applying function `f` to a value `x` until the predicate function `p` is
- * true. A negative, recursive version of a `while` loop.
- * @param {Function} p - A predicate function that returns a boolean
- * @param {Function} f - The function to apply to `x`
- * @param {*} x - The value to bind to `f`
- * @returns {*} The result of applying `f` to `x` until `p` returns `true`
- * @kind function
- * @example
- * const p = x => x > 10;
- * const f = x => x + 1;
- * const u = until(p, f);
- * u(1);                  // => 11
- */
-export const until = (p, f, x) => p(x) ? x : until(p, f, f(x));
 
 /**
  * Create a new `List` from a series of zero or more values.
@@ -72,6 +56,7 @@ export const listRange = (start, end, f, filt) => {
    x = f(x);
    return x;
  }
+ const until = (p, f, x) => p(x) ? x : until(p, f, f(x));
  until(p, go, start);
  return lst;
 }
