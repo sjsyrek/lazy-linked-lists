@@ -10,7 +10,11 @@
 
 import {List} from './list';
 
-import {GT} from './ord';
+import {
+  LT,
+  GT,
+  EQ
+} from './ord';
 
 const errorEmptyList = from => new Error(`*** Exception: ${from}: empty list`);
 
@@ -32,45 +36,15 @@ export const emptyList = new List();
 export const list = (...as) => as.length === 0 ? emptyList : new List(as.shift(), list(...as));
 
 /**
- * Build a `List` from a range of values. Currently, this only works with numbers.
- * @param {*} start - The beginning of the range (inclusive)
- * @param {*} end - The end of the range (exclusive)
- * @param {Function} [f=(x => x + 1)] - The function to apply iteratively to each value
- * @param {Function} [filt] - An optional filter (returning `boolean`) to test whether to add each
- * value to the `List`
- * @returns {List} The new `List`
- * @kind function
- * @example
- * const f = x => x + 5;
- * const evens = x => even(x);
- * listRange(0, 100, f);        // => [0:5:10:15:20:25:30:35:40:45:50:55:60:65:70:75:80:85:90:95:[]]
- * listRange(0, 100, f, evens); // => [0:10:20:30:40:50:60:70:80:90:[]]
- */
-export const listRange = (start, end, f, filt) => {
- if (f === undefined) { f = x => x + 1; }
- let lst = emptyList;
- const p = x => x >= end;
- const go = x => {
-   if (filt === undefined) { lst = listAppend(lst, list(x)); }
-   if (filt !== undefined && filt(x)) { lst = listAppend(lst, list(x)); }
-   x = f(x);
-   return x;
- }
- const until = (p, f, x) => p(x) ? x : until(p, f, f(x));
- until(p, go, start);
- return lst;
-}
-
-/**
  * Build a `List` from a range of values using lazy evaluation (i.e. each successive value is only
  * computed on demand, making infinite lists feasible). To supply your own function for determining
- * the increment, use `listRangeLazyBy`.
+ * the increment, use `listRangeBy`.
  * @param {*} start - The starting value
  * @param {*} end - The end value
  * @returns {List} A `List` that will be evaluated lazily
  * @kind function
  */
-export const listRangeLazy = (start, end) => listRangeLazyBy(start, end, (x => x + 1));
+export const listRange = (start, end) => listRangeBy(start, end, (x => x + 1));
 
 /**
  * Build a `List` from a range of values using lazy evaluation and incrementing it using a given
@@ -81,7 +55,7 @@ export const listRangeLazy = (start, end) => listRangeLazyBy(start, end, (x => x
  * @returns {List} A `List` that will be evaluated lazily
  * @kind function
  */
-export const listRangeLazyBy = (start, end, step) => {
+export const listRangeBy = (start, end, step) => {
   if (start === end) { return list(start); }
   if (start > end) { return emptyList; }
   let x = start;
@@ -105,22 +79,6 @@ export const listRangeLazyBy = (start, end, step) => {
   const proxy = new Proxy(xs, handler);
   return proxy;
 }
-
-/**
- * Build a `List` from a range of enumerated values, and apply a filter to each one. This function
- * is a shortcut for `listRange` that simply applies a filter with the default function `x = x + 1`.
- * @param {*} start - The beginning of the range (inclusive)
- * @param {*} end - The end of the range (exclusive)
- * @param {Function} [filt] - An optional filter (returning `boolean`) to test whether to add each
- * value to the `List`
- * @returns {List} A new `List` of filtered values
- * @kind function
- * @example
- * const f = x => x + 5;
- * const evens = x => even(x);
- * listFilter(1, 30, evens);   // => [2:4:6:8:10:12:14:16:18:20:22:24:26:28:[]]
- */
-export const listFilter = (start, end, filt) => listRange(start, end, x => x + 1, filt);
 
 /**
  * Append one `List` to another.
@@ -387,7 +345,7 @@ export const reverse = xs => {
  * const lst2 = reverse(listRange(1, 11, f)); // [10:9:8:7:6:5:4:3:2:1:[]]
  * sort(lst2);                           // => [1:2:3:4:5:6:7:8:9:10:[]]
  */
-export const sort = xs => sortBy((xs, ys) => xs.compare(ys), xs);
+export const sort = xs => sortBy((a, b) => a === b ? EQ : (a < b ? LT : GT), xs);
 
 /**
  * Sort a list using a comparison function of your choice. Uses a merge sort algorithm.
@@ -539,7 +497,7 @@ export const listInf = start => listInfBy(start, (x => x + 1));
  * @returns {List} An infinite `List` of consecutive values, incremented from `start`
  * @kind function
  */
-export const listInfBy = (start, step) => listRangeLazyBy(start, Infinity, step);
+export const listInfBy = (start, step) => listRangeBy(start, Infinity, step);
 
 /**
  * Return an infinite `List` of repeated applications of a function to a value.
