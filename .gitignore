@@ -1,0 +1,8 @@
+.DS_STORE
+node_modules
+distribution
+coverage
+.nyc_output
+*.lcov
+*.log
+*~
