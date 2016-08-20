@@ -12,7 +12,7 @@ import {
   LT,
   GT,
   EQ
-} from 'ord';
+} from './ord';
 
 import {
   emptyList,
@@ -26,7 +26,7 @@ import {
   fromListToString,
   map,
   concat
-} from 'lib';
+} from './lib';
 
 /**
  * A data constructor for a `List`.
