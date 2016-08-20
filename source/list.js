@@ -164,7 +164,8 @@ export class List {
   toString() { return `[Object List]`; }
   typeOf() { return `[${isEmpty(this) ? '' : typeof this.head()}]`; }
   valueOf() {
-    const value = list => isEmpty(list) ? `` : `${head(list)}:${value(tail(list))}`;
+    if (this === emptyList) { return `[]`; }
+    const value = xs => isEmpty(xs) ? `[]` : `${head(xs)}:${value(tail(xs))}`;
     return `[${typeof this === `[string]` ? fromListToString(this) : value(this)}]`;
   }
 }
