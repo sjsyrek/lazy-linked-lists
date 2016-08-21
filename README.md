@@ -14,9 +14,13 @@
 
 ## About
 
-This library is adapted from [maryamyriameliamurphies.js](https://github.com/sjsyrek/maryamyriameliamurphies.js) with several modifications. It includes functions for creating both eagerly and lazily-evaluated linked list data structures, including infinite lists, and a core subset of functions for working with them. Unlike **maryamyriameliamurphies.js**, however, **lazy-linked-lists** does not implement function currying, partial application, or type checking. It does, however, implement most of the standard [Haskell](https://www.haskell.org) type classes as instance methods and the [ES2015 iteration protocols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+This library is adapted from [maryamyriameliamurphies.js](https://github.com/sjsyrek/maryamyriameliamurphies.js) with several modifications. It includes functions for creating both eagerly and lazily-evaluated linked list data structures, including infinite lists, and a core subset of functions for working with them. Unlike **maryamyriameliamurphies.js**, however, **lazy-linked-lists** does not implement function currying, partial application, or type checking. It does, however, implement most of the standard [Haskell](https://www.haskell.org) type classes as instance methods, and it also implements the [ES2015 iteration protocols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols), so you can use them in `for...of` loops.
+
+Note that as of this writing, most implementations of the ES2015 standard do not yet support [proper tail calls](http://www.2ality.com/2015/06/tail-call-optimization.html). But support is on its way! The newest versions of node and Safari have already rolled it out, and other vendors are surely not far behind. See the top line of this [compatibility chart](https://kangax.github.io/compat-table/es6/) to track the progress of the feature that will make recursively defined, fully-functional, high octane linked lists in JavaScript a reality. Until that fateful day, however, you may be limited to lists of only 10,000 elements or so.
 
 For further details, see the [maryamyriameliamurphies.js documentation](http://sjsyrek.github.io/maryamyriameliamurphies.js/).
+
+##### [Try it now with Tonic](https://tonicdev.com/npm/lazy-linked-lists)
 
 ## Examples
 
@@ -36,6 +40,17 @@ Linked list, lazily evaluated with a user-defined step function:
 ```js
 const lst = listRangeBy(0, 100, x => x + 10);
 lst.valueOf(); // => '[0:10:20:30:40:50:60:70:80:90:100:[]]'
+```
+
+Iterating over a linked list:
+```js
+const lst = listRange(1, 5);
+for (let value of lst) { console.log(value); }
+// 1
+// 2
+// 3
+// 4
+// 5
 ```
 
 Infinite list:
@@ -83,26 +98,22 @@ index(lst11, 100); // => 2
 index(lst11, 101); // => 3
 ```
 
-##### [Try it now with Tonic](https://tonicdev.com/npm/lazy-linked-lists)
-
 ### How to install and use
 
 - [Install with npm](https://www.npmjs.com/package/lazy-linked-lists) `npm install --save-dev lazy-linked-lists`. _Do not_ install this package globally.
 - If you're transpiling >=ES2015 code with [Babel](http://babeljs.io), put `import * as lazy from 'lazy-linked-lists';` at the top of your script files.
-- Or, to pollute your namespace, import functions individually: `import {listRange, listRangeBy} from 'lazy-linked-lists';`
-- Or, if you aren't transpiling (or you're old school), use node's require syntax: `const lazy = require('lazy-linked-lists');`
+- Or, to pollute your namespace, import functions individually: `import {listRange, listRangeBy} from 'lazy-linked-lists';`.
+- Or, if you aren't transpiling (or you're old school), use node's require syntax: `const lazy = require('lazy-linked-lists');`.
 
 ### How to develop
 
-- [Fork this repo](https://help.github.com/articles/fork-a-repo/) and [clone it locally](https://help.github.com/articles/cloning-a-repository/)
-- `npm install` to download the dependencies
+- [Fork this repo](https://help.github.com/articles/fork-a-repo/) and [clone it locally](https://help.github.com/articles/cloning-a-repository/).
+- `npm install` to download the dependencies.
 - `npm run compile` to run Babel on ES2015 code in `./source` and output transpiled ES5 code to `./distribution`.
 - `npm run lint` to run ESlint to check the source code for errors.
 - `npm test` to run Mocha on the test code in `./test`.
 - `npm run cover` to run nyc on the source code and generate testing coverage reports.
 - `npm run clean` to delete all files in `./distribution`.
-
-These commands require that you have certain [npm](https://www.npmjs.com) packages installed. See below.
 
 #### See also
 
