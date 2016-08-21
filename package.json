@@ -1,6 +1,6 @@
 {
   "name": "lazy-linked-lists",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Lazy and infinite linked lists for JavaScript.",
   "author": "Steven J. Syrek",
   "license": "ISC",
