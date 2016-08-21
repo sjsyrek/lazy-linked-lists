@@ -42,11 +42,23 @@ export class List {
    * @param {List} tail - The tail of the `List`, which is also a `List` (possibly the empty list)
    * @private
    */
-  constructor(head, tail) {
+  constructor(x, xs) {
     this.head = null;
     this.tail = null;
-    this.head = () => head;
-    this.tail = () => tail;
+    this.head = () => x;
+    this.tail = () => xs;
+  }
+  [Symbol.iterator]() {
+    const listIterator = function* (xs) {
+      do {
+        yield head(xs);
+        xs = tail(xs);
+      } while (xs !== emptyList);
+    };
+    const gen = listIterator(this);
+    return {
+      next() { return gen.next(); }
+    };
   }
   /**
    * Determine whether the `List` on which it is called is exactly equal to another `List`.
