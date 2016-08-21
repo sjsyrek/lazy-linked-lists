@@ -16,9 +16,9 @@ import {
   EQ
 } from './ord';
 
-const errorEmptyList = from => new Error(`*** Exception: ${from}: empty list`);
+const errorEmptyList = from => new Error(`*** Exception: ${from.name}: empty list`);
 
-const errorOutOffRange = from => new Error(`*** Exception: ${from}: range error`);
+const errorOutOffRange = from => new Error(`*** Exception: ${from.name}: range error`);
 
 /**
  * The empty list.
