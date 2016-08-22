@@ -134,7 +134,8 @@ export class List {
    * @returns {*} The result of the traversal
    */
   traverse(f) {
-    return isEmpty(this) ? this.pure(emptyList) : this.head().fmap(cons).ap(this.tail().traverse(f));
+    const cons_f = (x, ys) => f(x).fmap(a => cons.bind(null, a)).ap(ys);
+    return isEmpty(this) ? this.pure(emptyList) : this.foldr(cons_f, this.pure(emptyList));
   }
   /**
    * Map a function over each element of a `List`, and return the results in a new `List`.
@@ -154,7 +155,7 @@ export class List {
    * @param {List} ys - The `List` of values
    * @returns {List} A new `List`, the result of the applications
    */
-  ap(ys) { return isEmpty(this) ? emptyList : listAppend(this.head().fmap(ys), this.tail().ap(ys)); }
+  ap(ys) { return isEmpty(this) ? emptyList : listAppend(ys.fmap(this.head()), this.tail().ap(ys)); }
   /**
    * Perform a monadic "bind" operation. Apply a function that returns a `List` to the values of the
    * `List` on which it is called and flatten the result to produce a new `List`.
