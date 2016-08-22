@@ -66,6 +66,48 @@ const lst = listInfBy(0, x => x + 10);
 take(11, lst).valueOf(); // => '[0:10:20:30:40:50:60:70:80:90:100:[]]'
 ```
 
+Haskell-style type class action:
+```js
+const lst1 = list(1,2,3);
+const lst2 = list(3,2,1);
+
+// Eq
+lst1.isEq(list(1,2,3)); // => true
+lst1.isEq(lst2); // => false
+
+// Ord
+lst1.compare(lst2); // => Symbol()
+lst1.compare(lst2) === LT; // => true
+lst1.isLessThan(lst2); // => true
+lst1.isGreaterThan(lst2); // => false
+
+// Monoid
+lst1.mappend(lst1.mempty()); // => '[1:2:3:[]]'
+lst1.mappend(lst2); // => '[1:2:3:4:5:6:[]]'
+
+// Foldable
+lst1.foldr((x,y) => x * y, 1); // => 6
+
+// Traversable
+lst1.traverse(x => list(x * 10)); // => '[[10:20:30:[]]:[]]'
+
+// Functor
+lst1.fmap(x => x * 10); // => '[10:20:30:[]]'
+
+// Applicative
+const f = x => x * 10;
+const fs1 = list(f);
+const fs2 = list(f,f,f);
+fs1.ap(lst1); // => '[10:20:30:[]]'
+fs2.ap(lst1); // => '[10:20:30:10:20:30:10:20:30:[]]'
+
+// Monad
+lst1.flatMap(x => list(x * 10)); // => '[10:20:30:[]]'
+lst1.then(lst2); // => '[4:5:6:4:5:6:4:5:6:[]]'
+const stringify = x => list(`${x}`);
+lst1.flatMap(x => list(x, x * 10, x * x)).flatMap(stringify); // => '[110122043309]'
+```
+
 Other fun stuff:
 ```js
 const lst1 = listInfBy(0, x => x + 2);
