@@ -61,10 +61,11 @@ export const listRangeBy = (start, end, step) => {
   let x = start;
   const xs = list(x);
   const listGenerator = function* () {
-    do {
+    x = step(x);
+    while (x < end) {
+      yield list(x);
       x = step(x);
-      if (x <= end) { yield list(x); }
-    } while (x < end);
+    }
   }
   const gen = listGenerator();
   const handler = {
