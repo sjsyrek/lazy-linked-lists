@@ -66,6 +66,10 @@ describe(`List data type`, function() {
   const lst8 = list(20,19,18,17,16,15,14,13,12,11,10,1,2,3,4,5,6,7,8,9);
   const sorted = list(1,2,3,4,5,6,7,8,9,10);
   const unsorted = list(10,9,8,7,6,5,4,3,2,1);
+  const f = x => x * 10;
+  const g = x => list(x * 10);
+  const fs1 = list(f);
+  const fs2 = list(f,f,f);
   const inf1 = listInf(1);
   const inf2 = listInfBy(1, x => x * 2);
   const inf3 = iterate(x => x * 2, 1);
@@ -111,16 +115,21 @@ describe(`List data type`, function() {
     reverse(lst1).foldr((x, y) => x * y, 1).should.equal(6);
   });
   it(`should be traversable`, function() {
-
+    lst1.traverse(g).should.eql(list(list(10,20,30)));
+    emptyList.traverse(g).should.eql(list(emptyList));
   });
   it(`should be a functor`, function() {
     lst1.fmap(x => x * 10).should.eql(list(10,20,30));
   });
   it(`should be an applicative functor`, function() {
     lst1.pure(1).should.eql(list(1));
+    lst1.pure(lst1).should.eql(lst1);
+    fs1.ap(lst1).should.eql(list(10,20,30));
+    fs2.ap(lst1).should.eql(list(10,20,30,10,20,30,10,20,30));
   });
   it(`should be a monad`, function() {
     lst1.flatMap(x => list(x * 10)).should.eql(list(10,20,30));
+    lst1.then(lst2).should.eql(list(4,5,6,4,5,6,4,5,6));
   });
   it(`should return [Object List] when cast to a string`, function() {
     lst1.toString().should.equal(`[Object List]`);
