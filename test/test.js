@@ -123,7 +123,7 @@ describe(`List data type`, function() {
   });
   it(`should be an applicative functor`, function() {
     lst1.pure(1).should.eql(list(1));
-    lst1.pure(lst1).should.eql(lst1);
+    lst1.pure(lst1).should.eql(list(lst1));
     fs1.ap(lst1).should.eql(list(10,20,30));
     fs2.ap(lst1).should.eql(list(10,20,30,10,20,30,10,20,30));
   });
