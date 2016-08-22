@@ -178,6 +178,6 @@ export class List {
   valueOf() {
     if (this === emptyList) { return `[]`; }
     const value = xs => isEmpty(xs) ? `[]` : `${head(xs)}:${value(tail(xs))}`;
-    return `[${typeof this === `[string]` ? fromListToString(this) : value(this)}]`;
+    return `[${this.typeOf() === `[string]` ? fromListToString(this) : value(this)}]`;
   }
 }
