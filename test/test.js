@@ -61,6 +61,9 @@ describe(`List data type`, function() {
   const lst3 = list();
   const lst4 = listRange(0, 10);
   const lst5 = listRangeBy(0, 50, x => x + 5);
+  const lst6 = list(1,1,4,4,9,9,6,6,3,3,8,8,7,7,5,5,2,2,10,10);
+  const lst7 = list(1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10);
+  const lst8 = list(20,19,18,17,16,15,14,13,12,11,10,1,2,3,4,5,6,7,8,9);
   const sorted = list(1,2,3,4,5,6,7,8,9,10);
   const unsorted = list(10,9,8,7,6,5,4,3,2,1);
   const inf1 = listInf(1);
@@ -111,13 +114,13 @@ describe(`List data type`, function() {
 
   });
   it(`should be a functor`, function() {
-
+    lst1.fmap(x => x * 10).should.eql(list(10,20,30));
   });
   it(`should be an applicative functor`, function() {
-
+    lst1.pure(1).should.eql(list(1));
   });
   it(`should be a monad`, function() {
-
+    lst1.flatMap(x => list(x * 10)).should.eql(list(10,20,30));
   });
   it(`should return [Object List] when cast to a string`, function() {
     lst1.toString().should.equal(`[Object List]`);
@@ -125,6 +128,11 @@ describe(`List data type`, function() {
   it(`should return a list string, e.g. "[1:2:3:[]]", as its value`, function() {
     lst1.valueOf().should.equal(`[1:2:3:[]]`);
     str.valueOf().should.equal(`[abc]`);
+  });
+  it(`should return its type enclosed in brackets as a string`, function() {
+    lst1.typeOf().should.equal(`[number]`);
+    str.typeOf().should.equal(`[string]`);
+    emptyList.typeOf().should.equal(`[]`);
   });
   describe(`emptyList`, function() {
     it(`should be an empty list`, function() {
@@ -201,7 +209,7 @@ describe(`List data type`, function() {
   describe(`length()`, function() {
     it(`should return the length of a list`, function() {
       length(lst1).should.equal(3);
-      length(lst4).should.equal(11);
+      length(lst4).should.equal(10);
     });
   });
   describe(`isList()`, function() {
@@ -275,7 +283,12 @@ describe(`List data type`, function() {
   });
   describe(`sort()`, function() {
     it(`should sort a list using a merge sort algorithm`, function() {
+      sort(sorted).should.eql(sorted);
       sort(unsorted).should.eql(sorted);
+      sort(list(1)).should.eql(list(1));
+      sort(list()).should.equal(emptyList);
+      sort(lst6).should.eql(lst7);
+      sort(lst8).should.eql(list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,30));
     });
   });
   describe(`sortBy()`, function() {
@@ -304,10 +317,16 @@ describe(`List data type`, function() {
     it(`should return the longest prefix of a list of values that satisfy a predicate function`, function() {
       takeWhile(x => x < 3, sorted).should.eql(list(0,1,2));
     });
+    it(`should return an empty list if the second argument is an empty list`, function() {
+      takeWhile(x => x < 3, emptyList).should.equal(emptyList);
+    });
   });
   describe(`dropWhile()`, function() {
     it(`should drop values from a list while a given predicate function returns true`, function() {
       dropWhile(x => x < 3, sorted).should.eql(list(3,4,5,6,7,8,9,10));
+    });
+    it(`should return an empty list if the second argument is an empty list`, function() {
+      dropWhile(x => x < 3, emptyList).should.equal(emptyList);
     });
   });
   describe(`listInf()`, function() {
@@ -344,6 +363,9 @@ describe(`List data type`, function() {
       const c = cycle(lst1);
       take(9, c).should.eql(list(1,2,3,1,2,3,1,2,3));
       index(c, 100).should.equal(2);
+    });
+    it(`should throw an error if the list is empty`, function() {
+      cycle.bind(null, emptyList).should.throw();
     });
   });
 });
