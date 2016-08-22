@@ -4,7 +4,7 @@
  *
  * lib.js
  *
- * Core functions for lazy-linked-list.
+ * Core functions for lazy-linked-lists.
  * @license ISC
  */
 
@@ -57,12 +57,11 @@ export const listRange = (start, end) => listRangeBy(start, end, (x => x + 1));
  */
 export const listRangeBy = (start, end, step) => {
   if (start === end) { return list(start); }
-  if (start > end) { return emptyList; }
   let x = start;
   const xs = list(x);
   const listGenerator = function* () {
     x = step(x);
-    while (x < end) {
+    while (start < end ? x < end : x > end) {
       yield list(x);
       x = step(x);
     }
