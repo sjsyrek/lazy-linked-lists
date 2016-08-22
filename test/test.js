@@ -165,12 +165,10 @@ describe(`List data type`, function() {
   describe(`listRangeBy()`, function() {
     it(`should build a list from a range of values and using a custom step function`, function() {
       lst5.should.eql(list(0,5,10,15,20,25,30,35,40,45,50));
+      listRangeBy(10, 0, x => x - 1).should.eql(list(10,9,8,7,6,5,4,3,2,1));
     });
     it(`should return a singleton list if the start and end values are the same`, function() {
       listRangeBy(1, 1).should.eql(list(1));
-    });
-    it(`should return the empty list if the start value is greater than the end value`, function() {
-      listRangeBy(1, 0).should.equal(emptyList);
     });
   });
   describe(`listAppend()`, function() {
