@@ -20,7 +20,7 @@ The lazy lists provided by this library are implemented using the new `Proxy` AP
 
 Note that as of this writing, most implementations of the ES2015 standard do not yet support [proper tail calls](http://www.2ality.com/2015/06/tail-call-optimization.html). But support is on its way! The newest versions of node and Safari have already rolled it out, and other vendors are surely not far behind. See the top line of this [compatibility chart](https://kangax.github.io/compat-table/es6/) to track the progress of the feature that will make recursively defined, fully-functional, high octane linked lists in JavaScript a reality. Until that fateful day, however, you may be limited to lists of only 10,000 elements or so.
 
-For further details, see the [maryamyriameliamurphies.js documentation](http://sjsyrek.github.io/maryamyriameliamurphies.js/).
+For further details, see the [documentation](http://sjsyrek.github.io/maryamyriameliamurphies.js/) for **maryamyriameliamurphies.js**.
 
 ##### [Try it now with Tonic](https://tonicdev.com/npm/lazy-linked-lists)
 
@@ -40,8 +40,10 @@ lst.valueOf(); // => '[1:2:3:4:5:6:7:8:9:10:[]]'
 
 Linked list, lazily evaluated with a user-defined step function:
 ```js
-const lst = listRangeBy(0, 100, x => x + 10);
-lst.valueOf(); // => '[0:10:20:30:40:50:60:70:80:90:100:[]]'
+const lst1 = listRangeBy(0, 100, x => x + 10);
+const lst2 = listRangeBy(10, 0, x => x - 1);
+lst1.valueOf(); // => '[0:10:20:30:40:50:60:70:80:90:100:[]]'
+lst2.valueOf(); // => '[10:9:8:7:6:5:4:3:2:1:[]]'
 ```
 
 Iterating over a linked list:
