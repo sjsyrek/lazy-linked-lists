@@ -1,4 +1,4 @@
-import * as lazy from '../';
+import * as lazy from '../source';
 
 describe(`iterate()`, function() {
   const inf = lazy.iterate(x => x * 2, 1);

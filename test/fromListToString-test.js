@@ -1,4 +1,4 @@
-import * as lazy from '../';
+import * as lazy from '../source';
 
 describe(`fromListToString()`, function() {
   const str = lazy.list(`a`,`b`,`c`);

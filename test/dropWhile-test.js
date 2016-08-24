@@ -1,4 +1,4 @@
-import * as lazy from '../';
+import * as lazy from '../source';
 
 describe(`dropWhile()`, function() {
   const lst = lazy.list(1,2,3,4,5,6,7,8,9,10);

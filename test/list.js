@@ -11,7 +11,7 @@
 /* global describe, it */
 
 import 'should';
-import * as lazy from '../';
+import * as lazy from '../source';
 
 describe(`List`, function() {
   describe(`#[Symbol.iterator]()`, function() {

@@ -1,4 +1,4 @@
-import * as lazy from '../';
+import * as lazy from '../source';
 
 describe(`listRange()`, function() {
   const lst1 = lazy.listRange(0, 10);

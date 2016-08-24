@@ -1,4 +1,4 @@
-import * as lazy from '../';
+import * as lazy from '../source';
 
 describe(`drop()`, function() {
   const lst = lazy.list(1,2,3);

@@ -1,4 +1,4 @@
-import * as lazy from '../';
+import * as lazy from '../source';
 
 describe(`sort()`, function() {
   const LT = lazy.LT, GT = lazy.GT, EQ = lazy.EQ;

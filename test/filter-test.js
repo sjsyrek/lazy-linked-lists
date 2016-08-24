@@ -1,4 +1,4 @@
-import * as lazy from '../';
+import * as lazy from '../source';
 
 describe(`filter()`, function() {
   const lst = lazy.listRangeBy(0, 50, x => x + 5);

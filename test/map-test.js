@@ -1,4 +1,4 @@
-import * as lazy from '../';
+import * as lazy from '../source';
 
 describe(`map()`, function() {
   const lst1 = lazy.list(1,2,3);

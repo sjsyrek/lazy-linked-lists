@@ -1,4 +1,4 @@
-import * as lazy from '../';
+import * as lazy from '../source';
 
 describe(`repeat()`, function() {
   const inf = lazy.repeat(3);
