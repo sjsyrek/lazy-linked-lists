@@ -2,7 +2,7 @@
  * lazy-linked-lists
  * Lazy and infinite linked lists for JavaScript.
  *
- * example.js
+ * example/sqrt.js
  *
  * Examples of usage for lazy-linked-lists.
  * @license ISC
@@ -11,7 +11,7 @@
 import * as lazy from '../source';
 
 /**
- * Compute the square root of a number using the Newton-Raphson method.
+ * Compute the square root of a number using infinite lists with the Newton-Raphson method.
  * Adapted from "Why Functional Programming Matters" by John Hughes.
  * @param {number} a0 - initial estimate
  * @param {number} eps - tolerance
