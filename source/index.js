@@ -2,7 +2,7 @@
  * lazy-linked-lists
  * Lazy and infinite linked lists for JavaScript.
  *
- * index.js
+ * source/index.js
  *
  * Top level index.
  */

@@ -2,7 +2,7 @@
  * lazy-linked-lists
  * Lazy and infinite linked lists for JavaScript.
  *
- * list.js
+ * source/list.js
  *
  * List data type.
  * @license ISC

@@ -2,7 +2,7 @@
  * lazy-linked-lists
  * Lazy and infinite linked lists for JavaScript.
  *
- * ord.js
+ * source/ord.js
  *
  * Ordering symbols.
  * @license ISC

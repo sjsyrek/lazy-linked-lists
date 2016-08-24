@@ -2,7 +2,7 @@
  * lazy-linked-lists
  * Lazy and infinite linked lists for JavaScript.
  *
- * lib.js
+ * source/lib.js
  *
  * Core functions for lazy-linked-lists.
  * @license ISC
@@ -20,9 +20,6 @@ const errorEmptyList = from => new Error(`*** Exception: ${from.name}: empty lis
 
 const errorOutOffRange = from => new Error(`*** Exception: ${from.name}: range error`);
 
-/**
- * The empty list.
- */
 export const emptyList = new List();
 
 /**
@@ -44,7 +41,11 @@ export const list = (...as) => as.length === 0 ? emptyList : new List(as.shift()
  * @returns {List} A `List` that will be evaluated lazily
  * @kind function
  */
-export const listRange = (start, end) => listRangeBy(start, end, (x => x + 1));
+export const listRange = (start, end) => {
+  if (start === end) { return list(start); }
+  if (start > end) { return listRangeBy(start, end, x => x - 1); }
+  return listRangeBy(start, end, x => x + 1);
+}
 
 /**
  * Build a `List` from a range of values using lazy evaluation and incrementing it using a given
