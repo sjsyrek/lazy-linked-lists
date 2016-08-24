@@ -8,7 +8,7 @@
  * @license ISC
  */
 
-/* global describe,context, it, beforeEach */
+/* global describe, context, it, beforeEach */
 
 import {
   LT,
