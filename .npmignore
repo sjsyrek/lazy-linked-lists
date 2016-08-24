@@ -1,5 +1,7 @@
 node_modules
 source
+test
+example
 coverage
 .nyc_output
 *.lcov
