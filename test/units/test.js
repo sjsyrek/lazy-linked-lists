@@ -10,7 +10,7 @@
 
 /* global describe, it */
 
-import 'should';
+//import 'should';
 
 import {
   LT,
@@ -56,6 +56,9 @@ import {
 } from '../source';
 
 describe(`List data type`, function() {
+
+debugger;
+
   const lst1 = list(1,2,3);
   const lst2 = list(4,5,6);
   const lst3 = list();
@@ -64,6 +67,8 @@ describe(`List data type`, function() {
   const lst6 = list(1,1,4,4,9,9,6,6,3,3,8,8,7,7,5,5,2,2,10,10);
   const lst7 = list(1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10);
   const lst8 = list(20,19,18,17,16,15,14,13,12,11,10,1,2,3,4,5,6,7,8,9);
+  const lst9 = listRange(10, 0);
+  const lst10 = listRangeBy(10, 0, function(x) { return x - 1 });
   const sorted = list(1,2,3,4,5,6,7,8,9,10);
   const unsorted = list(10,9,8,7,6,5,4,3,2,1);
   const f = x => x * 10;
@@ -158,14 +163,18 @@ describe(`List data type`, function() {
     });
   });
   describe(`listRange()`, function() {
-    it(`should build a list from a range of values`, function() {
-      lst4.should.eql(list(0,1,2,3,4,5,6,7,8,9,10));
+    it.only(`should build a list from a range of values`, function() {
+      //lst4.should.eql(list(0,1,2,3,4,5,6,7,8,9,10));
+      lst9.should.eql(list(10,9,8,7,6,5,4,3,2,1));
+    });
+    it(`should return a singleton list if the start and end values are the same`, function() {
+      listRange(1, 1).should.eql(list(1));
     });
   });
   describe(`listRangeBy()`, function() {
     it(`should build a list from a range of values and using a custom step function`, function() {
       lst5.should.eql(list(0,5,10,15,20,25,30,35,40,45,50));
-      listRangeBy(10, 0, x => x - 1).should.eql(list(10,9,8,7,6,5,4,3,2,1));
+      lst10.should.eql(list(10,9,8,7,6,5,4,3,2,1));
     });
     it(`should return a singleton list if the start and end values are the same`, function() {
       listRangeBy(1, 1).should.eql(list(1));
@@ -284,7 +293,7 @@ describe(`List data type`, function() {
     });
   });
   describe(`reverse()`, function() {
-    it(`should `, function() {
+    it(`should reverse a list`, function() {
       reverse(lst1).should.eql(list(3,2,1));
     });
   });
