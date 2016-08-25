@@ -74,8 +74,8 @@ export class List {
    */
   compare(ys) {
     if (isEmpty(this) && isEmpty(ys)) { return EQ; }
-    if (isEmpty(this) && isEmpty(ys) === false) { return LT; }
-    if (isEmpty(this) === false && isEmpty(ys)) { return GT; }
+    if (isEmpty(this) && !isEmpty(ys)) { return LT; }
+    if (!isEmpty(this) && isEmpty(ys)) { return GT; }
     if (this.head() === head(ys)) { return this.tail().compare(tail(ys)); }
     return this.head() < head(ys) ? LT : GT;
   }
