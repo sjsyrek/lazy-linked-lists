@@ -2,10 +2,16 @@
 
 ### An open source npm package written in ES2015 and transpiled with Babel
 
-[![License](https://img.shields.io/badge/license-ISC-blue.svg)](https://github.com/sjsyrek/lazy-linked-lists/blob/master/LICENSE.txt)
-[![Build Status](https://travis-ci.org/sjsyrek/lazy-linked-lists.svg?branch=master)](https://travis-ci.org/sjsyrek/lazy-linked-lists)
-[![Test Coverage](https://codeclimate.com/github/sjsyrek/lazy-linked-lists/badges/coverage.svg)](https://codeclimate.com/github/sjsyrek/lazy-linked-lists/coverage)
-[![Downloads](https://img.shields.io/npm/dt/lazy-linked-lists.svg?maxAge=2592000)](https://www.npmjs.com/package/lazy-linked-lists)
+[![license](https://img.shields.io/badge/license-ISC-blue.svg)](https://github.com/sjsyrek/lazy-linked-lists/blob/master/LICENSE.txt)
+[![build status](https://travis-ci.org/sjsyrek/lazy-linked-lists.svg?branch=master)](https://travis-ci.org/sjsyrek/lazy-linked-lists)
+[![test coverage](https://codeclimate.com/github/sjsyrek/lazy-linked-lists/badges/coverage.svg)](https://codeclimate.com/github/sjsyrek/lazy-linked-lists/coverage)
+[![bitHound score](https://www.bithound.io/github/sjsyrek/lazy-linked-lists/badges/score.svg)](https://www.bithound.io/github/sjsyrek/lazy-linked-lists)
+[![dependencies status](https://david-dm.org/sjsyrek/lazy-linked-lists.svg)](https://david-dm.org/sjsyrek/lazy-linked-lists)
+[![devDependencies status](https://david-dm.org/sjsyrek/lazy-linked-lists/dev-status.svg)](https://david-dm.org/sjsyrek/lazy-linked-lists?type=dev)
+[![dependency status](https://dependencyci.com/github/sjsyrek/lazy-linked-lists/badge)](https://dependencyci.com/github/sjsyrek/lazy-linked-lists)
+[![style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/334/badge)](https://bestpractices.coreinfrastructure.org/projects/334)
 
 [![NPM](https://nodei.co/npm/lazy-linked-lists.png?downloads=true)](https://nodei.co/npm/lazy-linked-lists/)
 
@@ -169,3 +175,5 @@ See also the files in the example directory.
 * [node-lazy](https://github.com/pkrumins/node-lazy)
 * [lazy-list](https://github.com/luochen1990/lazy-list)
 * [js-list-lazy](https://github.com/dankogai/js-list-lazy)
+* [fantasy-land](https://github.com/fantasyland/fantasy-land)
+* [js-algebraic](https://github.com/tel/js-algebraic)
