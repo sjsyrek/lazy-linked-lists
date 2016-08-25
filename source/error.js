@@ -9,14 +9,14 @@
  */
 
 export class EmptyListError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'EmptyListError';
+  constructor (message) {
+    super(message)
+    this.name = 'EmptyListError'
   }
 }
 export class OutOfRangeError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'OutOfRangeError';
+  constructor (message) {
+    super(message)
+    this.name = 'OutOfRangeError'
   }
 }

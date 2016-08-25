@@ -8,20 +8,20 @@
  * @license ISC
  */
 
-import {List} from './list';
+import {List} from './list'
 
 import {
   LT,
   GT,
   EQ
-} from './ord';
+} from './ord'
 
 import {
   EmptyListError,
   OutOfRangeError
-} from './error';
+} from './error'
 
-export const emptyList = new List();
+export const emptyList = new List()
 
 /**
  * Create a new `List` from a series of zero or more values.
@@ -31,7 +31,7 @@ export const emptyList = new List();
  * @example
  * list(1,2,3); // => [1:2:3:[]]
  */
-export const list = (...as) => as.length === 0 ? emptyList : new List(as.shift(), list(...as));
+export const list = (...as) => as.length === 0 ? emptyList : new List(as.shift(), list(...as))
 
 /**
  * Build a `List` from a range of values using lazy evaluation (i.e. each successive value is only
@@ -43,9 +43,9 @@ export const list = (...as) => as.length === 0 ? emptyList : new List(as.shift()
  * @kind function
  */
 export const listRange = (start, end) => {
-  if (start === end) { return list(start); }
-  if (start > end) { return listRangeBy(start, end, x => x - 1); }
-  return listRangeBy(start, end, x => x + 1);
+  if (start === end) { return list(start) }
+  if (start > end) { return listRangeBy(start, end, x => x - 1) }
+  return listRangeBy(start, end, x => x + 1)
 }
 
 /**
@@ -58,28 +58,28 @@ export const listRange = (start, end) => {
  * @kind function
  */
 export const listRangeBy = (start, end, step) => {
-  if (start === end) { return list(start); }
-  let x = start;
-  const xs = list(x);
+  if (start === end) { return list(start) }
+  let x = start
+  const xs = list(x)
   const listGenerator = function* () {
-    x = step(x);
+    x = step(x)
     while (start < end ? x < end : x > end) {
-      yield list(x);
-      x = step(x);
+      yield list(x)
+      x = step(x)
     }
   }
-  const gen = listGenerator();
+  const gen = listGenerator()
   const handler = {
     get: function (target, prop) {
       if (prop === `tail` && isEmpty(tail(target))) {
-        const next = gen.next();
-        if (next.done === false) { target[prop] = () => new Proxy(next.value, handler); }
+        const next = gen.next()
+        if (next.done === false) { target[prop] = () => new Proxy(next.value, handler) }
       }
-      return target[prop];
+      return target[prop]
     }
-  };
-  const proxy = new Proxy(xs, handler);
-  return proxy;
+  }
+  const proxy = new Proxy(xs, handler)
+  return proxy
 }
 
 /**
@@ -94,9 +94,9 @@ export const listRangeBy = (start, end, step) => {
  * listAppend(lst1, lst2);   // => [1:2:3:4:5:6:[]]
  */
 export const listAppend = (xs, ys) => {
-  if (isEmpty(xs)) { return ys; }
-  if (isEmpty(ys)) { return xs; }
-  return cons(head(xs), listAppend(tail(xs), ys));
+  if (isEmpty(xs)) { return ys }
+  if (isEmpty(ys)) { return xs }
+  return cons(head(xs), listAppend(tail(xs), ys))
 }
 
 /**
@@ -109,7 +109,7 @@ export const listAppend = (xs, ys) => {
  * const lst = list(4,5,6);
  * cons(3)(lst);            // => [3:4:5:6:[]]
  */
-export const cons = (x, xs) => new List(x, xs);
+export const cons = (x, xs) => new List(x, xs)
 
 /**
  * Extract the first element of a `List`.
@@ -121,8 +121,8 @@ export const cons = (x, xs) => new List(x, xs);
  * head(lst);               // => 1
  */
 export const head = xs => {
-  if (isEmpty(xs)) { throw new EmptyListError(head); }
-  return xs.head();
+  if (isEmpty(xs)) { throw new EmptyListError(head) }
+  return xs.head()
 }
 
 /**
@@ -135,8 +135,8 @@ export const head = xs => {
  * last(lst);               // => 3
  */
 export const last = xs => {
-  if (isEmpty(xs)) { throw new EmptyListError(last); }
-  return isEmpty(tail(xs)) ? head(xs) : last(tail(xs));
+  if (isEmpty(xs)) { throw new EmptyListError(last) }
+  return isEmpty(tail(xs)) ? head(xs) : last(tail(xs))
 }
 
 /**
@@ -149,8 +149,8 @@ export const last = xs => {
  * tail(lst);               // => [2:3:[]]
  */
 export const tail = xs => {
-  if (isEmpty(xs)) { throw new EmptyListError(tail); }
-  return xs.tail();
+  if (isEmpty(xs)) { throw new EmptyListError(tail) }
+  return xs.tail()
 }
 
 /**
@@ -163,8 +163,8 @@ export const tail = xs => {
  * init(lst);               // => [1:2:[]]
  */
 export const init = xs => {
-  if (isEmpty(xs)) { throw new EmptyListError(init); }
-  return isEmpty(tail(xs)) ? emptyList : cons(head(xs), init(tail(xs)));
+  if (isEmpty(xs)) { throw new EmptyListError(init) }
+  return isEmpty(tail(xs)) ? emptyList : cons(head(xs), init(tail(xs)))
 }
 
 /**
@@ -177,8 +177,8 @@ export const init = xs => {
  * length(lst);             // => 3
  */
 export const length = xs => {
-  const lenAcc = (xs, n) => isEmpty(xs) ? n : lenAcc(tail(xs), n + 1);
-  return lenAcc(xs, 0);
+  const lenAcc = (xs, n) => isEmpty(xs) ? n : lenAcc(tail(xs), n + 1)
+  return lenAcc(xs, 0)
 }
 
 /**
@@ -187,7 +187,7 @@ export const length = xs => {
  * @returns {boolean} `true` if the object is a `List` and `false` otherwise
  * @kind function
  */
-export const isList = a => a instanceof List ? true : false;
+export const isList = a => a instanceof List
 
 /**
  * Check whether a `List` is empty. Returns `true` if the `List` is empty or false if it is
@@ -201,7 +201,7 @@ export const isList = a => a instanceof List ? true : false;
  * isEmpty(emptyList);       // => true
  * isEmpty(list(emptyList)); // => false
  */
-export const isEmpty = xs => xs === emptyList;
+export const isEmpty = xs => xs === emptyList
 
 /**
  * Convert an array into a `List`.
@@ -212,7 +212,7 @@ export const isEmpty = xs => xs === emptyList;
  * const arr = [1,2,3];
  * fromArrayToList(arr); // => [1:2:3:[]]
  */
-export const fromArrayToList = arr => list(...arr);
+export const fromArrayToList = arr => list(...arr)
 
 /**
  * Convert a `List` into an array.
@@ -223,7 +223,7 @@ export const fromArrayToList = arr => list(...arr);
  * const lst = list(1,2,3);
  * fromListToArray(lst);    // => [1,2,3]
  */
-export const fromListToArray = xs => isEmpty(xs) ? [] : [head(xs)].concat(fromListToArray(tail(xs)));
+export const fromListToArray = xs => isEmpty(xs) ? [] : [head(xs)].concat(fromListToArray(tail(xs)))
 /**
  * Convert a `List` into a string.
  * @param {List} xs - A `List` to convert into a string
@@ -233,7 +233,7 @@ export const fromListToArray = xs => isEmpty(xs) ? [] : [head(xs)].concat(fromLi
  * const str = list('a','b','c');
  * fromListToString(str);         // => "abc"
  */
-export const fromListToString = xs => fromListToArray(xs).join(``);
+export const fromListToString = xs => fromListToArray(xs).join(``)
 
 /**
  * Convert a string into a `List`.
@@ -244,7 +244,7 @@ export const fromListToString = xs => fromListToArray(xs).join(``);
  * const str = `abc`;
  * fromStringToList(str); // => [abc]
  */
-export const fromStringToList = str => fromArrayToList(str.split(``));
+export const fromStringToList = str => fromArrayToList(str.split(``))
 
 /**
  * Concatenate the elements in a `List` of lists.
@@ -259,10 +259,10 @@ export const fromStringToList = str => fromArrayToList(str.split(``));
  * concat(xss);                        // => [1:2:3:4:5:6:7:8:9:[]]
  */
 export const concat = xss => {
-  if (isEmpty(xss)) { return emptyList; }
-  const x = head(xss);
-  const xs = tail(xss);
-  return listAppend(x, concat(xs));
+  if (isEmpty(xss)) { return emptyList }
+  const x = head(xss)
+  const xs = tail(xss)
+  return listAppend(x, concat(xs))
 }
 
 /**
@@ -276,11 +276,11 @@ export const concat = xss => {
  * index(lst, 3));              // => 4
  */
 export const index = (as, n) => {
-  if (n < 0 || isEmpty(as)) { throw new OutOfRangeError(head); }
-  const x = head(as);
-  const xs = tail(as);
-  if (n === 0) { return x; }
-  return index(xs, n - 1);
+  if (n < 0 || isEmpty(as)) { throw new OutOfRangeError(head) }
+  const x = head(as)
+  const xs = tail(as)
+  if (n === 0) { return x }
+  return index(xs, n - 1)
 }
 
 /**
@@ -295,11 +295,11 @@ export const index = (as, n) => {
  * filter(f, lst); // => [11:13:15:17:19:21:23:25:27:29:31:33:35:37:39:41:43:45:47:49:[]]
  */
 export const filter = (f, as) => {
-  if (isEmpty(as)) { return emptyList; }
-  const x = head(as);
-  const xs = tail(as);
-  if (f(x) === true) { return cons(x, filter(f, xs)); }
-  return filter(f, xs);
+  if (isEmpty(as)) { return emptyList }
+  const x = head(as)
+  const xs = tail(as)
+  if (f(x) === true) { return cons(x, filter(f, xs)) }
+  return filter(f, xs)
 }
 
 /**
@@ -314,10 +314,10 @@ export const filter = (f, as) => {
  * map(f, lst));                 // => [3:6:9:12:15:[]]
  */
 export const map = (f, as) => {
-  if (isEmpty(as)) { return emptyList; }
-  const x = f(head(as));
-  const xs = tail(as);
-  return cons(x, map(f, xs));
+  if (isEmpty(as)) { return emptyList }
+  const x = f(head(as))
+  const xs = tail(as)
+  return cons(x, map(f, xs))
 }
 
 /**
@@ -330,8 +330,8 @@ export const map = (f, as) => {
  * reverse(lst);                // => [5:4:3:2:1:[]]
  */
 export const reverse = xs => {
-  const r = (xs, a) => isEmpty(xs) ? a : r(tail(xs), cons(head(xs), a));
-  return r(xs, emptyList);
+  const r = (xs, a) => isEmpty(xs) ? a : r(tail(xs), cons(head(xs), a))
+  return r(xs, emptyList)
 }
 
 /**
@@ -347,7 +347,7 @@ export const reverse = xs => {
  * const lst2 = reverse(listRange(1, 11, f)); // [10:9:8:7:6:5:4:3:2:1:[]]
  * sort(lst2);                           // => [1:2:3:4:5:6:7:8:9:10:[]]
  */
-export const sort = xs => sortBy((a, b) => a === b ? EQ : (a < b ? LT : GT), xs);
+export const sort = xs => sortBy((a, b) => a === b ? EQ : (a < b ? LT : GT), xs)
 
 /**
  * Sort a list using a comparison function of your choice. Uses a merge sort algorithm.
@@ -358,54 +358,54 @@ export const sort = xs => sortBy((a, b) => a === b ? EQ : (a < b ? LT : GT), xs)
  */
 export const sortBy = (cmp, as) => {
   const sequences = as => {
-    if (isEmpty(as)) { return list(as); }
-    let xs = tail(as);
-    if (isEmpty(xs)) { return list(as); }
-    const a = head(as);
-    const b = head(xs);
-    xs = tail(xs);
-    if (cmp(a, b) === GT) { return descending(b, list(a), xs); }
-    return ascending(b, cons.bind(null, a), xs);
+    if (isEmpty(as)) { return list(as) }
+    let xs = tail(as)
+    if (isEmpty(xs)) { return list(as) }
+    const a = head(as)
+    const b = head(xs)
+    xs = tail(xs)
+    if (cmp(a, b) === GT) { return descending(b, list(a), xs) }
+    return ascending(b, cons.bind(null, a), xs)
   }
   const descending = (a, as, bbs) => {
-    if (isEmpty(bbs)) { return cons(cons(a, as), sequences(bbs)); }
-    const b = head(bbs);
-    const bs = tail(bbs);
-    if (cmp(a, b) === GT) { return descending(b, cons(a, as), bs); }
-    return cons(cons(a, as), sequences(bbs));
+    if (isEmpty(bbs)) { return cons(cons(a, as), sequences(bbs)) }
+    const b = head(bbs)
+    const bs = tail(bbs)
+    if (cmp(a, b) === GT) { return descending(b, cons(a, as), bs) }
+    return cons(cons(a, as), sequences(bbs))
   }
   const ascending = (a, as, bbs) => {
-    if (isEmpty(bbs)) { return cons(as(list(a)), sequences(bbs)); }
-    const b = head(bbs);
-    const bs = tail(bbs);
-    const ys = ys => as(cons(a, ys));
-    if (cmp(a, b) !== GT) { return ascending(b, ys, bs); }
-    return cons(as(list(a)), sequences(bbs));
+    if (isEmpty(bbs)) { return cons(as(list(a)), sequences(bbs)) }
+    const b = head(bbs)
+    const bs = tail(bbs)
+    const ys = ys => as(cons(a, ys))
+    if (cmp(a, b) !== GT) { return ascending(b, ys, bs) }
+    return cons(as(list(a)), sequences(bbs))
   }
   const mergeAll = xs => {
-    if (isEmpty(tail(xs))) { return head(xs); }
-    return mergeAll(mergePairs(xs));
+    if (isEmpty(tail(xs))) { return head(xs) }
+    return mergeAll(mergePairs(xs))
   }
   const mergePairs = as => {
-    if (isEmpty(as)) { return as; }
-    let xs = tail(as);
-    if (isEmpty(xs)) { return as; }
-    const a = head(as);
-    const b = head(xs);
-    xs = tail(xs);
-    return cons(merge(a, b), mergePairs(xs));
+    if (isEmpty(as)) { return as }
+    let xs = tail(as)
+    if (isEmpty(xs)) { return as }
+    const a = head(as)
+    const b = head(xs)
+    xs = tail(xs)
+    return cons(merge(a, b), mergePairs(xs))
   }
   const merge = (as, bs) => {
-    if (isEmpty(as)) { return bs; }
-    if (isEmpty(bs)) { return as; }
-    const a = head(as);
-    const as1 = tail(as);
-    const b = head(bs);
-    const bs1 = tail(bs);
-    if (cmp(a, b) === GT) { return cons(b, merge(as, bs1)); }
-    return cons(a, merge(as1, bs));
+    if (isEmpty(as)) { return bs }
+    if (isEmpty(bs)) { return as }
+    const a = head(as)
+    const as1 = tail(as)
+    const b = head(bs)
+    const bs1 = tail(bs)
+    if (cmp(a, b) === GT) { return cons(b, merge(as, bs1)) }
+    return cons(a, merge(as1, bs))
   }
-  return mergeAll(sequences(as));
+  return mergeAll(sequences(as))
 }
 
 /**
@@ -419,11 +419,11 @@ export const sortBy = (cmp, as) => {
  * take(2, lst);            // => [1:2:[]]
  */
 export const take = (n, as) => {
-  if (n <= 0) { return emptyList; }
-  if (isEmpty(as)) { return emptyList; }
-  const x = head(as);
-  const xs = tail(as);
-  return cons(x, take(n - 1, xs));
+  if (n <= 0) { return emptyList }
+  if (isEmpty(as)) { return emptyList }
+  const x = head(as)
+  const xs = tail(as)
+  return cons(x, take(n - 1, xs))
 }
 
 /**
@@ -437,10 +437,10 @@ export const take = (n, as) => {
  * drop(2, lst);            // => [3:[]]
  */
 export const drop = (n, as) => {
-  if (n <= 0) { return as; }
-  if (isEmpty(as)) { return emptyList; }
-  const xs = tail(as);
-  return drop(n - 1, xs);
+  if (n <= 0) { return as }
+  if (isEmpty(as)) { return emptyList }
+  const xs = tail(as)
+  return drop(n - 1, xs)
 }
 
 /**
@@ -456,12 +456,12 @@ export const drop = (n, as) => {
  * takeWhile(f, lst);                 // => [1:2:[]]
  */
 export const takeWhile = (p, as) => {
-  if (isEmpty(as)) { return emptyList; }
-  const x = head(as);
-  const xs = tail(as);
-  const test = p(x);
-  if (test === true) { return cons(x, takeWhile(p, xs)); }
-  return emptyList;
+  if (isEmpty(as)) { return emptyList }
+  const x = head(as)
+  const xs = tail(as)
+  const test = p(x)
+  if (test === true) { return cons(x, takeWhile(p, xs)) }
+  return emptyList
 }
 
 /**
@@ -476,12 +476,12 @@ export const takeWhile = (p, as) => {
  * dropWhile(f, lst);                 // => [3:4:5:1:2:3:[]]
  */
 export const dropWhile = (p, as) => {
-  if (isEmpty(as)) { return emptyList; }
-  const x = head(as);
-  const xs = tail(as);
-  const test = p(x);
-  if (test === true) { return dropWhile(p, xs); }
-  return as;
+  if (isEmpty(as)) { return emptyList }
+  const x = head(as)
+  const xs = tail(as)
+  const test = p(x)
+  if (test === true) { return dropWhile(p, xs) }
+  return as
 }
 
 /**
@@ -490,7 +490,7 @@ export const dropWhile = (p, as) => {
  * @returns {List} An infinite `List` of consecutive values, incremented from `start`
  * @kind function
  */
-export const listInf = start => listInfBy(start, (x => x + 1));
+export const listInf = start => listInfBy(start, x => x + 1)
 
 /**
  * Generate an infinite `List`, incremented using a given step function.
@@ -499,7 +499,7 @@ export const listInf = start => listInfBy(start, (x => x + 1));
  * @returns {List} An infinite `List` of consecutive values, incremented from `start`
  * @kind function
  */
-export const listInfBy = (start, step) => listRangeBy(start, Infinity, step);
+export const listInfBy = (start, step) => listRangeBy(start, Infinity, step)
 
 /**
  * Return an infinite `List` of repeated applications of a function to a value.
@@ -513,7 +513,7 @@ export const listInfBy = (start, step) => listRangeBy(start, Infinity, step);
  * take(10, lst);             // => [1:2:4:8:16:32:64:128:256:512:[]]
  * index(lst, 10);            // => 1024
  */
-export const iterate = (f, x) => listInfBy(x, (x => f(x)));
+export const iterate = (f, x) => listInfBy(x, x => f(x))
 
 /**
  * Build an infinite `List` of identical values.
@@ -525,7 +525,7 @@ export const iterate = (f, x) => listInfBy(x, (x => f(x)));
  * take(10, lst);         // => [3:3:3:3:3:3:3:3:3:3:[]]
  * index(lst, 100);       // => 3
  */
-export const repeat = a => cons(a, listInfBy(a, a => a));
+export const repeat = a => cons(a, listInfBy(a, a => a))
 
 /**
  * Return a `List` of a specified length in which every value is the same.
@@ -536,7 +536,7 @@ export const repeat = a => cons(a, listInfBy(a, a => a));
  * @example
  * replicate(10, 3); // => [3:3:3:3:3:3:3:3:3:3:[]]
  */
-export const replicate = (n, x) => take(n, repeat(x));
+export const replicate = (n, x) => take(n, repeat(x))
 
 /**
  * Return the infinite repetition of a `List` (i.e. the "identity" of infinite lists).
@@ -550,28 +550,28 @@ export const replicate = (n, x) => take(n, repeat(x));
  * index(c, 100);           // => 2
  */
 export const cycle = as => {
-  if (isEmpty(as)) { throw new EmptyListError(cycle); }
-  let x = head(as);
-  let xs = tail(as);
-  const c = list(x);
+  if (isEmpty(as)) { throw new EmptyListError(cycle) }
+  let x = head(as)
+  let xs = tail(as)
+  const c = list(x)
   /* eslint no-constant-condition: ["error", { "checkLoops": false }] */
   const listGenerator = function* () {
     do {
-      x = isEmpty(xs) ? head(as) : head(xs);
-      xs = isEmpty(xs) ? tail(as) : tail(xs);
-      yield list(x);
-    } while (true);
+      x = isEmpty(xs) ? head(as) : head(xs)
+      xs = isEmpty(xs) ? tail(as) : tail(xs)
+      yield list(x)
+    } while (true)
   }
-  const gen = listGenerator();
+  const gen = listGenerator()
   const handler = {
     get: function (target, prop) {
       if (prop === `tail` && isEmpty(tail(target))) {
-        const next = gen.next();
-        target[prop] = () => new Proxy(next.value, handler);
+        const next = gen.next()
+        target[prop] = () => new Proxy(next.value, handler)
       }
-      return target[prop];
+      return target[prop]
     }
-  };
-  const proxy = new Proxy(c, handler);
-  return proxy;
+  }
+  const proxy = new Proxy(c, handler)
+  return proxy
 }

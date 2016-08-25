@@ -8,7 +8,7 @@
  * @license ISC
  */
 
-import * as lazy from '../source';
+import * as lazy from '../source'
 
 /**
  * Compute the square root of a number using infinite lists with the Newton-Raphson method.
@@ -23,18 +23,20 @@ import * as lazy from '../source';
  * sqrt(1,0,144);         // => 12
  * relativeSqrt(1,0,144); // optimized version for very small and very large numbers
  */
-const sqrt = (a01, eps0, n) => within(eps, lazy.iterate(next.bind(null, n), a0));
+export const sqrt = (a0, eps, n) => within(eps, lazy.iterate(next.bind(null, n), a0))
 
-const relativeSqrt = (a0, eps, n) => relative(eps, lazy.iterate(next.bind(null, n), a0));
+export const relativeSqrt = (a0, eps, n) => relative(eps, lazy.iterate(next.bind(null, n), a0))
 
-const next = (n, x) => (x + n/x) / 2;
+const next = (n, x) => (x + n / x) / 2
 
 const within = (eps, rest) => {
-  let a = lazy.index(rest, 0), b = lazy.index(rest, 1);
-  return Math.abs(a - b) <= eps ? b : within(eps, lazy.drop(1, rest));
+  let a = lazy.index(rest, 0)
+  let b = lazy.index(rest, 1)
+  return Math.abs(a - b) <= eps ? b : within(eps, lazy.drop(1, rest))
 }
 
 const relative = (eps, rest) => {
-  let a = lazy.index(rest, 0), b = lazy.index(rest, 1);
-  return Math.abs(a - b) <= eps * Math.abs(b) ? b : relative(eps, lazy.drop(1, rest));
+  let a = lazy.index(rest, 0)
+  let b = lazy.index(rest, 1)
+  return Math.abs(a - b) <= eps * Math.abs(b) ? b : relative(eps, lazy.drop(1, rest))
 }

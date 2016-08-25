@@ -12,16 +12,16 @@
  * The "less than" ordering. Equivalent to <.
  * @const {Symbol} LT
  */
-export const LT = Symbol();
+export const LT = Symbol()
 
 /**
  * The "greater than" ordering. Equivalent to >.
  * @const {Symbol} GT
  */
-export const GT = Symbol();
+export const GT = Symbol()
 
 /**
  * The "equals" ordering. Equivalent to ===.
  * @const {Symbol} EQ
  */
-export const EQ = Symbol();
+export const EQ = Symbol()

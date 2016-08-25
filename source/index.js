@@ -11,7 +11,7 @@ export {
   LT,
   GT,
   EQ
-} from './ord';
+} from './ord'
 
 export {
   emptyList,
@@ -48,9 +48,9 @@ export {
   repeat,
   replicate,
   cycle
-} from './lib';
+} from './lib'
 
 export {
   EmptyListError,
   OutOfRangeError
-} from './error';
+} from './error'
