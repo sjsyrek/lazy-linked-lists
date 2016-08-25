@@ -49,3 +49,8 @@ export {
   replicate,
   cycle
 } from './lib';
+
+export {
+  EmptyListError,
+  OutOfRangeError
+} from './error';
