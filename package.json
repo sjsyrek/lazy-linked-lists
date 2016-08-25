@@ -75,7 +75,7 @@
     "cover": "nyc --reporter html --reporter text -- npm -s test",
     "cover:report": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov",
     "prepublish": "npm run compile",
-    "release": "semantic-release pre && npm publish && semantic-release post",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "standard": "standard",
     "fix": "standard --fix"
   }
