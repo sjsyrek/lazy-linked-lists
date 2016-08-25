@@ -1,6 +1,5 @@
 {
   "name": "lazy-linked-lists",
-  "version": "0.1.0",
   "description": "Lazy and infinite linked lists for JavaScript.",
   "author": "Steven J. Syrek",
   "license": "ISC",
@@ -52,7 +51,8 @@
     "eslint": "^3.3.1",
     "mocha": "^3.0.2",
     "nyc": "^8.1.0",
-    "should": "^11.1.0"
+    "should": "^11.1.0",
+    "semantic-release": "^4.3.5"
   },
   "dependencies": {
     "babel-runtime": "^6.11.6"
@@ -64,6 +64,7 @@
     "test": "cross-env NODE_ENV=test mocha --compilers js:babel-register",
     "cover": "nyc --reporter html --reporter text -- npm -s test",
     "cover:report": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov",
-    "prepublish": "npm run compile"
+    "prepublish": "npm run compile",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   }
 }
