@@ -1,4 +1,4 @@
-/**
+  /**
  * lazy-linked-lists
  * Lazy and infinite linked lists for JavaScript.
  *
@@ -16,9 +16,10 @@ import {
   EQ
 } from './ord';
 
-const errorEmptyList = from => new Error(`*** Exception: ${from.name}: empty list`);
-
-const errorOutOffRange = from => new Error(`*** Exception: ${from.name}: range error`);
+import {
+  EmptyListError,
+  OutOfRangeError
+} from './error';
 
 export const emptyList = new List();
 
@@ -120,7 +121,7 @@ export const cons = (x, xs) => new List(x, xs);
  * head(lst);               // => 1
  */
 export const head = xs => {
-  if (isEmpty(xs)) { throw errorEmptyList(head); }
+  if (isEmpty(xs)) { throw new EmptyListError(head); }
   return xs.head();
 }
 
@@ -134,7 +135,7 @@ export const head = xs => {
  * last(lst);               // => 3
  */
 export const last = xs => {
-  if (isEmpty(xs)) { throw errorEmptyList(last); }
+  if (isEmpty(xs)) { throw new EmptyListError(last); }
   return isEmpty(tail(xs)) ? head(xs) : last(tail(xs));
 }
 
@@ -148,7 +149,7 @@ export const last = xs => {
  * tail(lst);               // => [2:3:[]]
  */
 export const tail = xs => {
-  if (isEmpty(xs)) { throw errorEmptyList(tail); }
+  if (isEmpty(xs)) { throw new EmptyListError(tail); }
   return xs.tail();
 }
 
@@ -162,7 +163,7 @@ export const tail = xs => {
  * init(lst);               // => [1:2:[]]
  */
 export const init = xs => {
-  if (isEmpty(xs)) { throw errorEmptyList(init); }
+  if (isEmpty(xs)) { throw new EmptyListError(init); }
   return isEmpty(tail(xs)) ? emptyList : cons(head(xs), init(tail(xs)));
 }
 
@@ -275,7 +276,7 @@ export const concat = xss => {
  * index(lst, 3));              // => 4
  */
 export const index = (as, n) => {
-  if (n < 0 || isEmpty(as)) { throw errorOutOffRange(index); }
+  if (n < 0 || isEmpty(as)) { throw new OutOfRangeError(head); }
   const x = head(as);
   const xs = tail(as);
   if (n === 0) { return x; }
@@ -549,7 +550,7 @@ export const replicate = (n, x) => take(n, repeat(x));
  * index(c, 100);           // => 2
  */
 export const cycle = as => {
-  if (isEmpty(as)) { throw errorEmptyList(cycle); }
+  if (isEmpty(as)) { throw new EmptyListError(cycle); }
   let x = head(as);
   let xs = tail(as);
   const c = list(x);
