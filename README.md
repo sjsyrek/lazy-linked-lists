@@ -1,7 +1,5 @@
 ## Lazy and infinite linked lists for JavaScript
 
-### An open source npm package written in ES2015 and transpiled with Babel
-
 [![license](https://img.shields.io/badge/license-ISC-blue.svg)](https://github.com/sjsyrek/lazy-linked-lists/blob/master/LICENSE.txt)
 [![build status](https://travis-ci.org/sjsyrek/lazy-linked-lists.svg?branch=master)](https://travis-ci.org/sjsyrek/lazy-linked-lists)
 [![test coverage](https://codeclimate.com/github/sjsyrek/lazy-linked-lists/badges/coverage.svg)](https://codeclimate.com/github/sjsyrek/lazy-linked-lists/coverage)
