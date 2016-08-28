@@ -72,6 +72,7 @@
     "compile": "babel source --out-dir distribution",
     "lint": "eslint source",
     "test": "cross-env NODE_ENV=test mocha --compilers js:babel-register",
+    "watch": "npm test -- --watch",
     "cover": "nyc --reporter html --reporter text -- npm -s test",
     "cover:report": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov",
     "prepublish": "npm run compile",
