@@ -6,6 +6,6 @@ describe(`concat()`, function () {
   const lst3 = lazy.list()
   const xss = lazy.list(lst1, lst2, lst3)
   it(`should concatenate (flatten) the elements in a list of lists`, function () {
-    lazy.concat(xss).should.eql(lazy.list(1, 2, 3, 4, 5, 6))
+    lazy.concat(xss).isEq(lazy.list(1, 2, 3, 4, 5, 6)).should.be.true
   })
 })

@@ -90,9 +90,9 @@ describe(`List`, function () {
     const lst1 = lazy.list(1, 2, 3)
     const lst2 = lazy.list(4, 5, 6)
     it(`should append the first list to the second, satisfying the monoid laws`, function () {
-      lst1.mappend(lazy.emptyList).should.eql(lst1)
-      lazy.emptyList.mappend(lst1).should.eql(lst1)
-      lst1.mappend(lst2).should.eql(lazy.list(1, 2, 3, 4, 5, 6))
+      lst1.mappend(lazy.emptyList).isEq(lst1).should.be.true
+      lazy.emptyList.mappend(lst1).isEq(lst1).should.be.true
+      lst1.mappend(lst2).isEq(lazy.list(1, 2, 3, 4, 5, 6)).should.be.true
     })
   })
   describe(`#foldr()`, function () {
@@ -107,23 +107,23 @@ describe(`List`, function () {
     const lst = lazy.list(1, 2, 3)
     const f = x => lazy.list(x * 10)
     it(`should map a function that returns a list over a list and collect the results`, function () {
-      lst.traverse(f).should.eql(lazy.list(lazy.list(10, 20, 30)))
-      lazy.emptyList.traverse(f).should.eql(lazy.list(lazy.emptyList))
+      lst.traverse(f).isEq(lazy.list(10, 20, 30)).should.be.true
+      lazy.emptyList.traverse(f).isEq(lazy.list(lazy.emptyList)).should.be.true
     })
   })
   describe(`#fmap()`, function () {
     const lst = lazy.list(1, 2, 3)
     const f = x => x * 10
     it(`should map a function over a list and return a new list containing the results`, function () {
-      lst.fmap(f).should.eql(lazy.list(10, 20, 30))
+      lst.fmap(f).isEq(lazy.list(10, 20, 30)).should.be.true
     })
   })
   describe(`#pure()`, function () {
     const lst = lazy.list(1, 2, 3)
     it(`should return a new list containing the argument value`, function () {
-      lst.pure(1).should.eql(lazy.list(1))
-      lst.pure(lst).should.eql(lazy.list(lst))
-      lazy.emptyList.pure(lazy.emptyList).should.eql(lazy.list(lazy.list()))
+      lst.pure(1).isEq(lazy.list(1)).should.be.true
+      lst.pure(lst).isEq(lazy.list(lst)).should.be.true
+      lazy.emptyList.pure(lazy.emptyList).isEq(lazy.list(lazy.list())).should.be.true
     })
   })
   describe(`#ap()`, function () {
@@ -132,17 +132,16 @@ describe(`List`, function () {
     const fs1 = lazy.list(f)
     const fs2 = lazy.list(f, f, f)
     it(`should sequentially apply the function(s) contained in a list to another list of values and collect the results in a new list`, function () {
-      fs1.ap(lst).should.eql(lazy.list(10, 20, 30))
-      fs1.ap(lazy.emptyList).should.equal(lazy.emptyList)
-      fs2.ap(lst).should.eql(lazy.list(10, 20, 30, 10, 20, 30, 10, 20, 30))
+      fs1.ap(lst).isEq(lazy.list(10, 20, 30)).should.be.true
+      fs1.ap(lazy.emptyList).isEq(lazy.emptyList).should.be.true
+      fs2.ap(lst).isEq(lazy.list(10, 20, 30, 10, 20, 30, 10, 20, 30)).should.be.true
     })
   })
   describe(`#flatMap()`, function () {
     const lst = lazy.list(1, 2, 3)
     const f = x => lazy.list(x * 10)
     it(`should map a function that returns a list over a list, collect the results, and flatten the list`, function () {
-      lst.flatMap(f).should.eql(lazy.list(10, 20, 30))
-      lazy.emptyList.flatMap(f).should.equal(lazy.emptyList)
+      lst.flatMap(f).isEq(lazy.list(10, 20, 30)).should.be.true
     })
   })
   describe(`#then()`, function () {
@@ -151,9 +150,9 @@ describe(`List`, function () {
     const f = x => x * 10
     const fs = lazy.list(f)
     it(`should sequentially apply the elements of one list to another but ignore the values of the first list`, function () {
-      lst1.then(lst2).should.eql(lazy.list(4, 5, 6, 4, 5, 6, 4, 5, 6))
+      lst1.then(lst2).isEq(lazy.list(4, 5, 6, 4, 5, 6, 4, 5, 6)).should.be.true
       lst1.then(lazy.emptyList).should.equal(lazy.emptyList)
-      fs.then(lst1).should.eql(lazy.list(1, 2, 3, 1, 2, 3, 1, 2, 3))
+      fs.then(lst1).isEq(lazy.list(1, 2, 3, 1, 2, 3, 1, 2, 3)).should.be.true
     })
   })
   describe(`#toString()`, function () {

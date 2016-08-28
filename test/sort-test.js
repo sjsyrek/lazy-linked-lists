@@ -8,11 +8,11 @@ describe(`sort()`, function () {
   const lst5 = lazy.list(20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9)
   const lst6 = lazy.list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 30)
   it(`should sort a list using a merge sort algorithm`, function () {
-    lazy.sort(lst1).should.eql(lst1)
-    lazy.sort(lst2).should.eql(lst1)
-    lazy.sort(lazy.list(1)).should.eql(lazy.list(1))
-    lazy.sort(lazy.list()).should.equal(lazy.emptyList)
-    lazy.sort(lst3).should.eql(lst4)
-    lazy.sort(lst5).should.eql(lst6)
+    lazy.sort(lst1).isEq(lst1).should.be.true
+    lazy.sort(lst2).isEq(lst1).should.be.true
+    lazy.sort(lazy.list(1)).isEq(lazy.list(1)).should.be.true
+    lazy.sort(lazy.list()).isEq(lazy.emptyList).should.be.true
+    lazy.sort(lst3).isEq(lst4).should.be.true
+    lazy.sort(lst5).isEq(lst6).should.be.true
   })
 })
