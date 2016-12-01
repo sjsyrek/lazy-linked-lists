@@ -1,4 +1,4 @@
-  /**
+/**
  * lazy-linked-lists
  * Lazy and infinite linked lists for JavaScript.
  *
