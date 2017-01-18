@@ -59,7 +59,7 @@
     "cross-env": "^3.1.0",
     "eslint": "^3.6.0",
     "mocha": "^3.0.2",
-    "nyc": "^8.1.0",
+    "nyc": "^10.1.2",
     "semantic-release": "^4.3.5",
     "should": "^11.1.0",
     "standard": "^8.4.0"
